@@ -110,11 +110,15 @@ let rec main () =
         let startingSequence = startingSequanceLine.Split(" ")
         printf "Length of sequance: "
         let len = int (System.Console.ReadLine())
-        if startingSequence.Length <> generalPrefixLength then
+        if startingSequence.Length < generalPrefixLength then
             printf "Length of sequence is too short. Will try to lengthen it.\n"
             let filledSequence = fillNotFullInitialSequence ngrams startingSequence
             printf "New sequence: %A\n" filledSequence
             print10Sequences ngrams filledSequence len
+        else if startingSequence.Length > generalPrefixLength then
+            printf "Sequence is too long taking last %d elements\n" generalPrefixLength
+            let shortenedSequence = takeLastNElements generalPrefixLength startingSequence
+            print10Sequences ngrams shortenedSequence len
         else
             print10Sequences ngrams startingSequence len
 
